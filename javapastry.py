@@ -3,11 +3,7 @@ import ogr
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-import os
-import sys
 import ctypes
-from ctypes import wintypes
-import pyodbc
 byref = ctypes.byref
 user32 = ctypes.windll.user32
 import os.path
