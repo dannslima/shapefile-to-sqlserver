@@ -29,13 +29,13 @@ def ImportShapeFile():
     instancia_sql = input_servidor.get()
     database = input_database.get()
     tabela = 'area_imovel'
-    usuario =  input_usuario.get()
+    usuario = input_usuario.get()
     senha = input_senha.get()
     shape = askopenfilename(title = "Select file",filetypes = (("SHAPEFILES","*.shp"),))
 
     # chama o ogr2ogr.exe e passa os parametros abaixo
     try:
-        command = f'ogr2ogr -f "MSSQLSpatial" "MSSQL:server={instancia_sql}={database};tables={tabela};UID={usuario};PWD={senha};driver={sqlserver}" "{shape}" -lco GEOMETRY_NAME=GEOM -lco GEOM_TYPE=GEOMETRY -nln "area_imovel" -a_srs "EPSG:4326" -overwrite -progress -skipfailures -lco UPLOAD_GEOM_FORMAT=wkb'
+        command = f'ogr2ogr -f "MSSQLSpatial" "MSSQL:server={instancia_sql};database={database};tables={tabela};UID={usuario};PWD={senha};driver={sqlserver}" "{shape}" -lco GEOMETRY_NAME=GEOM -lco GEOM_TYPE=GEOMETRY -nln "area_imovel" -a_srs "EPSG:4326" -overwrite -progress -skipfailures -lco UPLOAD_GEOM_FORMAT=wkb'
         os.system(command)
         messagebox.showwarning(title='SUCESSO', message='Shapefile importado com sucesso para o banco de dados')
     except:
@@ -77,10 +77,8 @@ lb_senha.place(x=10, y=210)
 BeaktButton = ttk.Button( text='SELECIONE SHAPEFILE',width=24,command= ImportShapeFile)
 BeaktButton.place(x=25, y=10)
 
-BeaktButton = ttk.Button(text='INSTALAR OSGEO4W',width=24,command= Mostrar_Variaveis)
+BeaktButton = ttk.Button(text='INSTALAR OSGEO4W',width=24,command= InstalarOsgeo)
 BeaktButton.place(x=25, y=60)
-
-
 
 
 
