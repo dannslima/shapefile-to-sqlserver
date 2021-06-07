@@ -14,3 +14,4 @@ MANUAL:
 <p><b>PASSO 3</b>:  IMPORTAR O SHAPEFILE</p>
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/xFmG77w/Whats-App-Image-2021-06-07-at-16-25-18.jpg" alt="Whats-App-Image-2021-06-07-at-16-25-18" border="0"></a>
+<a href="https://ibb.co/Hh1YRTT"><img src="https://i.ibb.co/TWpRJMM/grafico-mapa.png" alt="grafico-mapa" border="0"></a>
