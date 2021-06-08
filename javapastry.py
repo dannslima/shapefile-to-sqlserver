@@ -1,9 +1,8 @@
-import os
-import ogr
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import ctypes
+import pyodbc
 byref = ctypes.byref
 user32 = ctypes.windll.user32
 import os.path
@@ -12,7 +11,7 @@ from tkinter.filedialog import askopenfilename
 
 #criar Nossa Janela
 jan=Tk()
-jan.title('DANILO VASCONCELOS')
+jan.title('JAVA PASTRY')
 jan.geometry('370x300')
 jan.configure(background = '#f0f0f0')
 jan.resizable(width=False, height=False)
@@ -33,12 +32,12 @@ def ImportShapeFile():
     # chama o ogr2ogr.exe e passa os parametros abaixo
     try:
         #DEFINIR VARIAVEIS DE AMBIENTE NO WINDOWDS PARA AS LIBS DO QGIS OSGEO
-        command = f' setx PATH “%PATH%;C:/OSGeo4W64/bin” '
-        command = f' setx GDAL_DATA “C:/OSGeo4W64/share/gdal” '
-        command = f' setx PROJ_LIB "C:/OSGeo4W64/share/proj"'
-        command = f'setx PATH “%PATH%;C:/OSGeo4W/bin”'
-        command = f' setx GDAL_DATA “C:/OSGeo4W/share/gdal”'
-        command = f'setx PROJ_LIB "C:/OSGeo4W/share/proj"'
+        command = f' setx PATH “%PATH%;C:\OSGeo4W64\\bin” '
+        command = f' setx GDAL_DATA “C:\OSGeo4W64\share\gdal” '
+        command = f' setx PROJ_LIB "C:\OSGeo4W64\share\proj"'
+        command = f'setx PATH “%PATH%;C:\OSGeo4W\\bin”'
+        command = f' setx GDAL_DATA “C:\OSGeo4W\share\gdal”'
+        command = f'setx PROJ_LIB "C:\OSGeo4W\share\proj"'
         if instancia_sql == '' or database == '' or usuario == '' or senha == '':
             messagebox.showwarning(title='PREENCHA TODOS OS DADOS', message='Por favor preencha todos os dados')
         else:
@@ -50,7 +49,17 @@ def ImportShapeFile():
             else:
                 messagebox.showwarning(title='ARQUIVO VAZIO', message='Por favor importe um arquivo valido')
 
-
+        server = 'TERMINAL-19\MSSQLSERVER01'
+        database = 'teste06'
+        username = 'javapastry'
+        password = 'javapastry'
+        conn = pyodbc.connect(
+            'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+        cursor = conn.cursor()
+        conn.commit()
+        cursor.execute(
+            "insert into area_imovel2 select GEOM, cod_imovel,num_area,cod_estado,nom_munici,num_modulo,tipo_imove,situacao,condicao_i  from area_imovel")
+        conn.commit()
     except:
         messagebox.showerror(title='ERRO', message='VERIFIQUE O ARQUIVO IMPORTADO')
 
