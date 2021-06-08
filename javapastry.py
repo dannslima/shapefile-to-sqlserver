@@ -31,9 +31,21 @@ def ImportShapeFile():
 
     # chama o ogr2ogr.exe e passa os parametros abaixo
     try:
-        command = f'ogr2ogr -f "MSSQLSpatial" "MSSQL:server={instancia_sql};database={database};tables={tabela};UID={usuario};PWD={senha};driver={sqlserver}" "{shape}" -lco GEOMETRY_NAME=GEOM -lco GEOM_TYPE=GEOMETRY -nln "area_imovel" -a_srs "EPSG:4326" -overwrite -progress -skipfailures -lco UPLOAD_GEOM_FORMAT=wkb'
-        os.system(command)
-        messagebox.showwarning(title='SUCESSO', message='Shapefile importado com sucesso para o banco de dados')
+        #DEFINIR VARIAVEIS DE AMBIENTE NO WINDOWDS PARA AS LIBS DO QGIS OSGEO
+        command = f' setx PATH “%PATH%;C:/OSGeo4W64/bin” '
+        command = f' setx GDAL_DATA “C:/OSGeo4W64/share/gdal” '
+        command = f' setx PROJ_LIB "C:/OSGeo4W64/share/proj"'
+        command = f'setx PATH “%PATH%;C:/OSGeo4W/bin”'
+        command = f' setx GDAL_DATA “C:/OSGeo4W/share/gdal”'
+        command = f'setx PROJ_LIB "C:/OSGeo4W/share/proj"'
+
+        if shape != '':
+            command = f'ogr2ogr -f "MSSQLSpatial" "MSSQL:server={instancia_sql};database={database};tables={tabela};UID={usuario};PWD={senha};driver={sqlserver}" "{shape}" -lco GEOMETRY_NAME=GEOM -lco GEOM_TYPE=GEOMETRY -nln "area_imovel" -a_srs "EPSG:4326" -overwrite -progress -skipfailures -lco UPLOAD_GEOM_FORMAT=wkb'
+            messagebox.showwarning(title='BANCO DE DADOS', message='IMPORTANDO PARA O BANCO . CLIQUE OK')
+            os.system(command)
+            messagebox.showwarning(title='SUCESSO', message='Shapefile importado com sucesso para o banco de dados')
+        else:
+            messagebox.showwarning(title='ARQUIVO VAZIO', message='Por favor importe um arquivo valido')
     except:
         messagebox.showerror(title='ERRO', message='VERIFIQUE O ARQUIVO IMPORTADO')
 
